@@ -1,0 +1,773 @@
+<html>
+
+<head>
+  <meta name="color-scheme" content="light dark">
+  <style type="text/css">
+    .CtxtMenu_InfoClose {
+      top: .2em;
+      right: .2em;
+    }
+
+    .CtxtMenu_InfoContent {
+      overflow: auto;
+      text-align: left;
+      font-size: 80%;
+      padding: .4em .6em;
+      border: 1px inset;
+      margin: 1em 0px;
+      max-height: 20em;
+      max-width: 30em;
+      background-color: #EEEEEE;
+      white-space: normal;
+    }
+
+    .CtxtMenu_Info.CtxtMenu_MousePost {
+      outline: none;
+    }
+
+    .CtxtMenu_Info {
+      position: fixed;
+      left: 50%;
+      width: auto;
+      text-align: center;
+      border: 3px outset;
+      padding: 1em 2em;
+      background-color: #DDDDDD;
+      color: black;
+      cursor: default;
+      font-family: message-box;
+      font-size: 120%;
+      font-style: normal;
+      text-indent: 0;
+      text-transform: none;
+      line-height: normal;
+      letter-spacing: normal;
+      word-spacing: normal;
+      word-wrap: normal;
+      white-space: nowrap;
+      float: none;
+      z-index: 201;
+      border-radius: 15px;
+      /* Opera 10.5 and IE9 */
+      -webkit-border-radius: 15px;
+      /* Safari and Chrome */
+      -moz-border-radius: 15px;
+      /* Firefox */
+      -khtml-border-radius: 15px;
+      /* Konqueror */
+      box-shadow: 0px 10px 20px #808080;
+      /* Opera 10.5 and IE9 */
+      -webkit-box-shadow: 0px 10px 20px #808080;
+      /* Safari 3 & Chrome */
+      -moz-box-shadow: 0px 10px 20px #808080;
+      /* Forefox 3.5 */
+      -khtml-box-shadow: 0px 10px 20px #808080;
+      /* Konqueror */
+      filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color="gray", Positive="true");
+      /* IE */
+    }
+  </style>
+  <style type="text/css">
+    .CtxtMenu_MenuClose {
+      position: absolute;
+      cursor: pointer;
+      display: inline-block;
+      border: 2px solid #AAA;
+      border-radius: 18px;
+      -webkit-border-radius: 18px;
+      /* Safari and Chrome */
+      -moz-border-radius: 18px;
+      /* Firefox */
+      -khtml-border-radius: 18px;
+      /* Konqueror */
+      font-family: "Courier New", Courier;
+      font-size: 24px;
+      color: #F0F0F0
+    }
+
+    .CtxtMenu_MenuClose span {
+      display: block;
+      background-color: #AAA;
+      border: 1.5px solid;
+      border-radius: 18px;
+      -webkit-border-radius: 18px;
+      /* Safari and Chrome */
+      -moz-border-radius: 18px;
+      /* Firefox */
+      -khtml-border-radius: 18px;
+      /* Konqueror */
+      line-height: 0;
+      padding: 8px 0 6px
+        /* may need to be browser-specific */
+    }
+
+    .CtxtMenu_MenuClose:hover {
+      color: white !important;
+      border: 2px solid #CCC !important
+    }
+
+    .CtxtMenu_MenuClose:hover span {
+      background-color: #CCC !important
+    }
+
+    .CtxtMenu_MenuClose:hover:focus {
+      outline: none
+    }
+  </style>
+  <style type="text/css">
+    .CtxtMenu_Menu {
+      position: absolute;
+      background-color: white;
+      color: black;
+      width: auto;
+      padding: 5px 0px;
+      border: 1px solid #CCCCCC;
+      margin: 0;
+      cursor: default;
+      font: menu;
+      text-align: left;
+      text-indent: 0;
+      text-transform: none;
+      line-height: normal;
+      letter-spacing: normal;
+      word-spacing: normal;
+      word-wrap: normal;
+      white-space: nowrap;
+      float: none;
+      z-index: 201;
+      border-radius: 5px;
+      /* Opera 10.5 and IE9 */
+      -webkit-border-radius: 5px;
+      /* Safari and Chrome */
+      -moz-border-radius: 5px;
+      /* Firefox */
+      -khtml-border-radius: 5px;
+      /* Konqueror */
+      box-shadow: 0px 10px 20px #808080;
+      /* Opera 10.5 and IE9 */
+      -webkit-box-shadow: 0px 10px 20px #808080;
+      /* Safari 3 & Chrome */
+      -moz-box-shadow: 0px 10px 20px #808080;
+      /* Forefox 3.5 */
+      -khtml-box-shadow: 0px 10px 20px #808080;
+      /* Konqueror */
+    }
+
+    .CtxtMenu_MenuItem {
+      padding: 1px 2em;
+      background: transparent;
+    }
+
+    .CtxtMenu_MenuArrow {
+      position: absolute;
+      right: .5em;
+      padding-top: .25em;
+      color: #666666;
+      font-family: null;
+      font-size: .75em
+    }
+
+    .CtxtMenu_MenuActive .CtxtMenu_MenuArrow {
+      color: white
+    }
+
+    .CtxtMenu_MenuArrow.CtxtMenu_RTL {
+      left: .5em;
+      right: auto
+    }
+
+    .CtxtMenu_MenuCheck {
+      position: absolute;
+      left: .7em;
+      font-family: null
+    }
+
+    .CtxtMenu_MenuCheck.CtxtMenu_RTL {
+      right: .7em;
+      left: auto
+    }
+
+    .CtxtMenu_MenuRadioCheck {
+      position: absolute;
+      left: .7em;
+    }
+
+    .CtxtMenu_MenuRadioCheck.CtxtMenu_RTL {
+      right: .7em;
+      left: auto
+    }
+
+    .CtxtMenu_MenuInputBox {
+      padding-left: 1em;
+      right: .5em;
+      color: #666666;
+      font-family: null;
+    }
+
+    .CtxtMenu_MenuInputBox.CtxtMenu_RTL {
+      left: .1em;
+    }
+
+    .CtxtMenu_MenuComboBox {
+      left: .1em;
+      padding-bottom: .5em;
+    }
+
+    .CtxtMenu_MenuSlider {
+      left: .1em;
+    }
+
+    .CtxtMenu_SliderValue {
+      position: absolute;
+      right: .1em;
+      padding-top: .25em;
+      color: #333333;
+      font-size: .75em
+    }
+
+    .CtxtMenu_SliderBar {
+      outline: none;
+      background: #d3d3d3
+    }
+
+    .CtxtMenu_MenuLabel {
+      padding: 1px 2em 3px 1.33em;
+      font-style: italic
+    }
+
+    .CtxtMenu_MenuRule {
+      border-top: 1px solid #DDDDDD;
+      margin: 4px 3px;
+    }
+
+    .CtxtMenu_MenuDisabled {
+      color: GrayText
+    }
+
+    .CtxtMenu_MenuActive {
+      background-color: #606872;
+      color: white;
+    }
+
+    .CtxtMenu_MenuDisabled:focus {
+      background-color: #E8E8E8
+    }
+
+    .CtxtMenu_MenuLabel:focus {
+      background-color: #E8E8E8
+    }
+
+    .CtxtMenu_ContextMenu:focus {
+      outline: none
+    }
+
+    .CtxtMenu_ContextMenu .CtxtMenu_MenuItem:focus {
+      outline: none
+    }
+
+    .CtxtMenu_SelectionMenu {
+      position: relative;
+      float: left;
+      border-bottom: none;
+      -webkit-box-shadow: none;
+      -webkit-border-radius: 0px;
+    }
+
+    .CtxtMenu_SelectionItem {
+      padding-right: 1em;
+    }
+
+    .CtxtMenu_Selection {
+      right: 40%;
+      width: 50%;
+    }
+
+    .CtxtMenu_SelectionBox {
+      padding: 0em;
+      max-height: 20em;
+      max-width: none;
+      background-color: #FFFFFF;
+    }
+
+    .CtxtMenu_SelectionDivider {
+      clear: both;
+      border-top: 2px solid #000000;
+    }
+
+    .CtxtMenu_Menu .CtxtMenu_MenuClose {
+      top: -10px;
+      left: -10px
+    }
+  </style>
+  <style id="MJX-CHTML-styles">
+    mjx-container[jax="CHTML"] {
+      line-height: 0;
+    }
+
+    mjx-container [space="1"] {
+      margin-left: .111em;
+    }
+
+    mjx-container [space="2"] {
+      margin-left: .167em;
+    }
+
+    mjx-container [space="3"] {
+      margin-left: .222em;
+    }
+
+    mjx-container [space="4"] {
+      margin-left: .278em;
+    }
+
+    mjx-container [space="5"] {
+      margin-left: .333em;
+    }
+
+    mjx-container [rspace="1"] {
+      margin-right: .111em;
+    }
+
+    mjx-container [rspace="2"] {
+      margin-right: .167em;
+    }
+
+    mjx-container [rspace="3"] {
+      margin-right: .222em;
+    }
+
+    mjx-container [rspace="4"] {
+      margin-right: .278em;
+    }
+
+    mjx-container [rspace="5"] {
+      margin-right: .333em;
+    }
+
+    mjx-container [size="s"] {
+      font-size: 70.7%;
+    }
+
+    mjx-container [size="ss"] {
+      font-size: 50%;
+    }
+
+    mjx-container [size="Tn"] {
+      font-size: 60%;
+    }
+
+    mjx-container [size="sm"] {
+      font-size: 85%;
+    }
+
+    mjx-container [size="lg"] {
+      font-size: 120%;
+    }
+
+    mjx-container [size="Lg"] {
+      font-size: 144%;
+    }
+
+    mjx-container [size="LG"] {
+      font-size: 173%;
+    }
+
+    mjx-container [size="hg"] {
+      font-size: 207%;
+    }
+
+    mjx-container [size="HG"] {
+      font-size: 249%;
+    }
+
+    mjx-container [width="full"] {
+      width: 100%;
+    }
+
+    mjx-box {
+      display: inline-block;
+    }
+
+    mjx-block {
+      display: block;
+    }
+
+    mjx-itable {
+      display: inline-table;
+    }
+
+    mjx-row {
+      display: table-row;
+    }
+
+    mjx-row>* {
+      display: table-cell;
+    }
+
+    mjx-mtext {
+      display: inline-block;
+    }
+
+    mjx-mstyle {
+      display: inline-block;
+    }
+
+    mjx-merror {
+      display: inline-block;
+      color: red;
+      background-color: yellow;
+    }
+
+    mjx-mphantom {
+      visibility: hidden;
+    }
+
+    _::-webkit-full-page-media,
+    _:future,
+    :root mjx-container {
+      will-change: opacity;
+    }
+
+    mjx-assistive-mml {
+      position: absolute !important;
+      top: 0px;
+      left: 0px;
+      clip: rect(1px, 1px, 1px, 1px);
+      padding: 1px 0px 0px 0px !important;
+      border: 0px !important;
+      display: block !important;
+      width: auto !important;
+      overflow: hidden !important;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    mjx-assistive-mml[display="block"] {
+      width: 100% !important;
+    }
+
+    mjx-c::before {
+      display: block;
+      width: 0;
+    }
+
+    .MJX-TEX {
+      font-family: MJXZERO, MJXTEX;
+    }
+
+    .TEX-B {
+      font-family: MJXZERO, MJXTEX-B;
+    }
+
+    .TEX-I {
+      font-family: MJXZERO, MJXTEX-I;
+    }
+
+    .TEX-MI {
+      font-family: MJXZERO, MJXTEX-MI;
+    }
+
+    .TEX-BI {
+      font-family: MJXZERO, MJXTEX-BI;
+    }
+
+    .TEX-S1 {
+      font-family: MJXZERO, MJXTEX-S1;
+    }
+
+    .TEX-S2 {
+      font-family: MJXZERO, MJXTEX-S2;
+    }
+
+    .TEX-S3 {
+      font-family: MJXZERO, MJXTEX-S3;
+    }
+
+    .TEX-S4 {
+      font-family: MJXZERO, MJXTEX-S4;
+    }
+
+    .TEX-A {
+      font-family: MJXZERO, MJXTEX-A;
+    }
+
+    .TEX-C {
+      font-family: MJXZERO, MJXTEX-C;
+    }
+
+    .TEX-CB {
+      font-family: MJXZERO, MJXTEX-CB;
+    }
+
+    .TEX-FR {
+      font-family: MJXZERO, MJXTEX-FR;
+    }
+
+    .TEX-FRB {
+      font-family: MJXZERO, MJXTEX-FRB;
+    }
+
+    .TEX-SS {
+      font-family: MJXZERO, MJXTEX-SS;
+    }
+
+    .TEX-SSB {
+      font-family: MJXZERO, MJXTEX-SSB;
+    }
+
+    .TEX-SSI {
+      font-family: MJXZERO, MJXTEX-SSI;
+    }
+
+    .TEX-SC {
+      font-family: MJXZERO, MJXTEX-SC;
+    }
+
+    .TEX-T {
+      font-family: MJXZERO, MJXTEX-T;
+    }
+
+    .TEX-V {
+      font-family: MJXZERO, MJXTEX-V;
+    }
+
+    .TEX-VB {
+      font-family: MJXZERO, MJXTEX-VB;
+    }
+
+    mjx-stretchy-v mjx-c,
+    mjx-stretchy-h mjx-c {
+      font-family: MJXZERO, MJXTEX-S1, MJXTEX-S4, MJXTEX, MJXTEX-A ! important;
+    }
+  </style>
+</head>
+
+<body class="_theme-github _color-light">
+  <link rel="stylesheet" type="text/css" href="./css/github.css"
+    id="_theme">
+  <link rel="stylesheet" type="text/css" href="./css/prism.min.css"
+    id="_prism">
+  <div id="_html" class="markdown-body _width-wide" style="visibility: visible;">
+    <h1 id="task2"><a class="anchor" name="task2" href="#task2"><span class="octicon octicon-link"></span></a>Task2</h1>
+    <iframe title="Task2_" width="1024" height="1060"
+      src="https://app.powerbi.com/view?r=eyJrIjoiYTA1NGQzMzItZDA4Yy00YThkLTlhZjEtMjUzZTQ3NmE5YzNlIiwidCI6ImFkMjhjNjI1LWYyY2EtNGU5MS1iNmQ2LTE4OTIyYmM5MzkxYyIsImMiOjh9"
+      frameborder="0" allowfullscreen="true"></iframe>
+
+
+    <hr>
+    <h2 id="2-connect"><a class="anchor" name="2-connect" href="#2-connect"><span
+          class="octicon octicon-link"></span></a>2 Connect</h2>
+    <h3 id="2-importe-para-o-powerbi-os-dados-da-base-de-dados-sql"><a class="anchor"
+        name="2-importe-para-o-powerbi-os-dados-da-base-de-dados-sql"
+        href="#2-importe-para-o-powerbi-os-dados-da-base-de-dados-sql"><span class="octicon octicon-link"></span></a>2.
+      Importe para o PowerBI os dados da base de dados SQL</h3>
+    <p><a href="./ScriptCreatePopulateBDConnect.sql">ScriptCreatePopulateBDConnect</a></p>
+    <ul>
+      <li>
+        <p>Add PK keys to Dimension Tables</p>
+      </li>
+      <li>
+        <p>Add FK keys constraints to the Facts Tables</p>
+      </li>
+      <li>
+        <p>Populate</p>
+      </li>
+    </ul>
+    <p><a href="./Diagram_Database.pdf">Diagram_Database</a></p>
+    <ol start="2">
+      <li>Confime/Estabeleça o modelo de dados no PowerBI</li>
+    </ol>
+    <ul>
+      <li>
+        <p>SQL SERVER</p>
+      </li>
+      <li>
+        <p>Server Name: <server_ip>:<port> eg.: 00.000.000.000:1433</port>
+          </server_ip>
+        </p>
+      </li>
+      <li>
+        <p>Username: </p>
+      </li>
+      <li>
+        <p>Password:</p>
+      </li>
+    </ul>
+    <p><a href="./task2_.pdf">task2</a></p>
+    <h3 id="3-confimação"><a class="anchor" name="3-confimação" href="#3-confimação"><span
+          class="octicon octicon-link"></span></a>3. Confimação</h3>
+    <h4 id="1-confimar-vendas-por-contiente"><a class="anchor" name="1-confimar-vendas-por-contiente"
+        href="#1-confimar-vendas-por-contiente"><span class="octicon octicon-link"></span></a>1. Confimar vendas por
+      contiente</h4>
+    <h4 id="e-screenshot-de-gráfio-query-screenshot-do-resultado-da-query"><a class="anchor"
+        name="e-screenshot-de-gráfio-query-screenshot-do-resultado-da-query"
+        href="#e-screenshot-de-gráfio-query-screenshot-do-resultado-da-query"><span
+          class="octicon octicon-link"></span></a>[E] screenshot de gráfio, query, screenshot do resultado da query</h4>
+    <h4 id="a-crie-um-pie-chart-com-total-de-valor-de-vendas-por-contiente"><a class="anchor"
+        name="a-crie-um-pie-chart-com-total-de-valor-de-vendas-por-contiente"
+        href="#a-crie-um-pie-chart-com-total-de-valor-de-vendas-por-contiente"><span
+          class="octicon octicon-link"></span></a>a. Crie um Pie Chart com total de valor de vendas por contiente</h4>
+    <p> <img src="./src/Task2_-images-0-1.jpg" alt="alt text"></p>
+    <h4 id="b-confime-com-uma-query-sql-em-ambiente-sql-que-os-valores-coincidem"><a class="anchor"
+        name="b-confime-com-uma-query-sql-em-ambiente-sql-que-os-valores-coincidem"
+        href="#b-confime-com-uma-query-sql-em-ambiente-sql-que-os-valores-coincidem"><span
+          class="octicon octicon-link"></span></a>b. Confime com uma query SQL em ambiente SQL que os valores coincidem
+    </h4>
+    <hr>
+    <pre class="language-sql" tabindex="0"><code class="language-sql">
+  <span class="token keyword">USE</span> SQL_OLAP
+  GO
+  
+  
+  <span class="token comment">-- 1. Confirmar vendas por continente</span>
+  
+  <span class="token comment">-- 1. b. Confirme com uma query SQL em ambiente SQL que os valores coincidem</span>
+  <span class="token keyword">SELECT</span> ds<span class="token punctuation">.</span><span class="token punctuation">[</span>País<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token function">SUM</span><span class="token punctuation">(</span>f<span class="token punctuation">.</span>Vendas<span class="token punctuation">)</span> <span class="token keyword">AS</span> TotalVendas
+  <span class="token keyword">FROM</span> Facts f <span class="token keyword">WITH</span> <span class="token punctuation">(</span>NOLOCK<span class="token punctuation">)</span>
+  <span class="token keyword">JOIN</span> DimSucursal ds <span class="token keyword">WITH</span> <span class="token punctuation">(</span>NOLOCK<span class="token punctuation">)</span> <span class="token keyword">ON</span> f<span class="token punctuation">.</span>DimSucursal <span class="token operator">=</span> ds<span class="token punctuation">.</span>SucursalID
+  <span class="token keyword">GROUP</span> <span class="token keyword">BY</span> ds<span class="token punctuation">.</span><span class="token punctuation">[</span>País<span class="token punctuation">]</span>
+  <span class="token keyword">ORDER</span> <span class="token keyword">BY</span> TotalVendas <span class="token keyword">DESC</span><span class="token punctuation">;</span>
+  
+  País	    TotalVendas
+  Portugal	<span class="token number">208882</span><span class="token punctuation">,</span><span class="token number">19</span>
+  Espanha	    <span class="token number">105867</span><span class="token punctuation">,</span><span class="token number">61</span>
+  UK	        <span class="token number">85625</span><span class="token punctuation">,</span><span class="token number">73</span>
+  França	    <span class="token number">58502</span><span class="token punctuation">,</span><span class="token number">19</span>
+  </code></pre>
+    <h3 id="2-confimar-quantiades-por-contiente"><a class="anchor" name="2-confimar-quantiades-por-contiente"
+        href="#2-confimar-quantiades-por-contiente"><span class="octicon octicon-link"></span></a>2. Confimar Quantiades
+      por contiente</h3>
+    <h4 id="e-screenshot-de-gráfio-query-screenshot-do-resultado-da-query-1"><a class="anchor"
+        name="e-screenshot-de-gráfio-query-screenshot-do-resultado-da-query-1"
+        href="#e-screenshot-de-gráfio-query-screenshot-do-resultado-da-query-1"><span
+          class="octicon octicon-link"></span></a>[E] screenshot de gráfio, query, screenshot do resultado da query</h4>
+    <h4 id="a-adicione-à-tabela-anterior-uma-coluna-com-as-somas-das-quantiades-por-pais"><a class="anchor"
+        name="a-adicione-à-tabela-anterior-uma-coluna-com-as-somas-das-quantiades-por-pais"
+        href="#a-adicione-à-tabela-anterior-uma-coluna-com-as-somas-das-quantiades-por-pais"><span
+          class="octicon octicon-link"></span></a>a. Adicione à tabela anterior uma coluna com as somas das Quantiades
+      por pais</h4>
+    <p><img src="./src/Task2_-images-1-1.jpg" alt="alt text"></p>
+    <pre class="language-sql" tabindex="0"><code class="language-sql">
+  <span class="token comment">--2. Confirmar Quantidades por continente</span>
+  
+  
+  <span class="token comment">-- 2 b. Confirme com uma query SQL em ambiente SQL que os valores coincidem</span>
+  <span class="token keyword">SELECT</span> ds<span class="token punctuation">.</span><span class="token punctuation">[</span>País<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token function">SUM</span><span class="token punctuation">(</span>f<span class="token punctuation">.</span>Vendas<span class="token punctuation">)</span> <span class="token keyword">AS</span> TotalVendas<span class="token punctuation">,</span><span class="token function">SUM</span><span class="token punctuation">(</span>f<span class="token punctuation">.</span>Quantidade<span class="token punctuation">)</span> <span class="token keyword">AS</span> TotalQuantidades
+  <span class="token keyword">FROM</span> Facts f <span class="token keyword">WITH</span> <span class="token punctuation">(</span>NOLOCK<span class="token punctuation">)</span>
+  <span class="token keyword">JOIN</span> DimSucursal ds <span class="token keyword">WITH</span> <span class="token punctuation">(</span>NOLOCK<span class="token punctuation">)</span> <span class="token keyword">ON</span> f<span class="token punctuation">.</span>DimSucursal <span class="token operator">=</span> ds<span class="token punctuation">.</span>SucursalID
+  <span class="token keyword">GROUP</span> <span class="token keyword">BY</span> ds<span class="token punctuation">.</span><span class="token punctuation">[</span>País<span class="token punctuation">]</span>
+  <span class="token keyword">ORDER</span> <span class="token keyword">BY</span> TotalVendas <span class="token keyword">DESC</span><span class="token punctuation">;</span>
+  
+  País	    TotalVendas	TotalQuantidades
+  Portugal	<span class="token number">208882</span><span class="token punctuation">,</span><span class="token number">19</span>	<span class="token number">75980</span>
+  Espanha	    <span class="token number">105867</span><span class="token punctuation">,</span><span class="token number">61</span>	<span class="token number">41460</span>
+  UK	        <span class="token number">85625</span><span class="token punctuation">,</span><span class="token number">73</span>	<span class="token number">30105</span>
+  França	    <span class="token number">58502</span><span class="token punctuation">,</span><span class="token number">19</span>	<span class="token number">19425</span>
+  </code></pre>
+    <h3 id="3-confimar-vendas-por-mês"><a class="anchor" name="3-confimar-vendas-por-mês"
+        href="#3-confimar-vendas-por-mês"><span class="octicon octicon-link"></span></a>3. Confimar vendas por mês</h3>
+    <h4 id="e-screenshot-de-gráfio-query-screenshot-do-resultado-da-query-2"><a class="anchor"
+        name="e-screenshot-de-gráfio-query-screenshot-do-resultado-da-query-2"
+        href="#e-screenshot-de-gráfio-query-screenshot-do-resultado-da-query-2"><span
+          class="octicon octicon-link"></span></a>[E] screenshot de gráfio, query, screenshot do resultado da query</h4>
+    <h4 id="a-crie-uma-tabela-visual-pbi-com-total-de-valor-de-vendas-por-mês"><a class="anchor"
+        name="a-crie-uma-tabela-visual-pbi-com-total-de-valor-de-vendas-por-mês"
+        href="#a-crie-uma-tabela-visual-pbi-com-total-de-valor-de-vendas-por-mês"><span
+          class="octicon octicon-link"></span></a>a. Crie uma Tabela (visual PBI) com total de valor de vendas por mês
+    </h4>
+    <p> <img src="./src/Task2_-images-2-1.jpg" alt="alt text"> </p>
+    <pre class="language-sql" tabindex="0"><code class="language-sql">
+  <span class="token comment">--3. Confirmar vendas por mês</span>
+  
+  <span class="token comment">--3. b. Confirme com uma query SQL em ambiente SQL que os valores coincidem</span>
+  <span class="token keyword">SELECT</span> <span class="token keyword">MONTH</span><span class="token punctuation">(</span>dd<span class="token punctuation">.</span><span class="token punctuation">[</span><span class="token keyword">Data</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> Mes<span class="token punctuation">,</span> <span class="token function">SUM</span><span class="token punctuation">(</span>f<span class="token punctuation">.</span>Vendas<span class="token punctuation">)</span> <span class="token keyword">AS</span> TotalVendas
+  <span class="token keyword">FROM</span> Facts f <span class="token keyword">WITH</span> <span class="token punctuation">(</span>NOLOCK<span class="token punctuation">)</span>
+  <span class="token keyword">JOIN</span> DimData dd <span class="token keyword">WITH</span> <span class="token punctuation">(</span>NOLOCK<span class="token punctuation">)</span> <span class="token keyword">ON</span> f<span class="token punctuation">.</span>DimData <span class="token operator">=</span> dd<span class="token punctuation">.</span>DataID
+  <span class="token keyword">GROUP</span> <span class="token keyword">BY</span> <span class="token keyword">MONTH</span><span class="token punctuation">(</span>dd<span class="token punctuation">.</span><span class="token punctuation">[</span><span class="token keyword">Data</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+  <span class="token keyword">ORDER</span> <span class="token keyword">BY</span> Mes<span class="token punctuation">;</span>
+  
+  
+  Mes	TotalVendas
+  <span class="token number">2</span>	<span class="token number">5590</span><span class="token punctuation">,</span><span class="token number">41</span>
+  <span class="token number">3</span>	<span class="token number">36611</span><span class="token punctuation">,</span><span class="token number">51</span>
+  <span class="token number">4</span>	<span class="token number">116750</span><span class="token punctuation">,</span><span class="token number">95</span>
+  <span class="token number">5</span>	<span class="token number">158490</span><span class="token punctuation">,</span><span class="token number">54</span>
+  <span class="token number">6</span>	<span class="token number">84736</span><span class="token punctuation">,</span><span class="token number">47</span>
+  <span class="token number">7</span>	<span class="token number">32842</span><span class="token punctuation">,</span><span class="token number">86</span>
+  <span class="token number">8</span>	<span class="token number">23854</span><span class="token punctuation">,</span><span class="token number">98</span>
+  </code></pre>
+    <h3 id="4-confimar-valor-de-vendas-por-linha-de-produto"><a class="anchor"
+        name="4-confimar-valor-de-vendas-por-linha-de-produto"
+        href="#4-confimar-valor-de-vendas-por-linha-de-produto"><span class="octicon octicon-link"></span></a>4.
+      Confimar valor de Vendas por Linha de produto</h3>
+    <h4 id="e-screenshot-de-gráfio-query-screenshot-do-resultado-da-query-3"><a class="anchor"
+        name="e-screenshot-de-gráfio-query-screenshot-do-resultado-da-query-3"
+        href="#e-screenshot-de-gráfio-query-screenshot-do-resultado-da-query-3"><span
+          class="octicon octicon-link"></span></a>[E] screenshot de gráfio, query, screenshot do resultado da query</h4>
+    <h4 id="a-crie-um-gráfio-de-barras-visual-pbi-com-total-de-valor-de-vendas-por-linha"><a class="anchor"
+        name="a-crie-um-gráfio-de-barras-visual-pbi-com-total-de-valor-de-vendas-por-linha"
+        href="#a-crie-um-gráfio-de-barras-visual-pbi-com-total-de-valor-de-vendas-por-linha"><span
+          class="octicon octicon-link"></span></a>a. Crie um gráfio de barras (visual PBI) com total de valor de vendas
+      por Linha</h4>
+    <p><img src="./src/Task2_-images-3-1.jpg" alt="alt text"></p>
+    <pre class="language-sql" tabindex="0"><code class="language-sql"><span class="token comment">--4. Confirmar valor de Vendas por Linha de produto</span>
+  
+  <span class="token comment">--4. b. Confirme com uma query SQL em ambiente SQL que os valores coincidem</span>
+  <span class="token keyword">SELECT</span> dp<span class="token punctuation">.</span>Linha <span class="token keyword">AS</span> LinhaProduto<span class="token punctuation">,</span> <span class="token function">SUM</span><span class="token punctuation">(</span>f<span class="token punctuation">.</span>Vendas<span class="token punctuation">)</span> <span class="token keyword">AS</span> TotalVendas
+  <span class="token keyword">FROM</span> Facts f <span class="token keyword">WITH</span> <span class="token punctuation">(</span>NOLOCK<span class="token punctuation">)</span>
+  <span class="token keyword">JOIN</span> DimProduto dp <span class="token keyword">WITH</span> <span class="token punctuation">(</span>NOLOCK<span class="token punctuation">)</span> <span class="token keyword">ON</span> f<span class="token punctuation">.</span>DimProduto <span class="token operator">=</span> dp<span class="token punctuation">.</span>ProdutoID
+  <span class="token keyword">GROUP</span> <span class="token keyword">BY</span> dp<span class="token punctuation">.</span>Linha
+  <span class="token keyword">ORDER</span> <span class="token keyword">BY</span> TotalVendas <span class="token keyword">DESC</span><span class="token punctuation">;</span>
+  
+  
+  LinhaProduto	TotalVendas
+  Quality	        <span class="token number">139978</span><span class="token punctuation">,</span><span class="token number">3</span>
+  Familiar	    <span class="token number">123657</span><span class="token punctuation">,</span><span class="token number">87</span>
+  Light	        <span class="token number">115140</span><span class="token punctuation">,</span><span class="token number">33</span>
+  Junior	        <span class="token number">80101</span><span class="token punctuation">,</span><span class="token number">22</span>
+  </code></pre>
+    <h2 id="4-preparar-medida-de-análise"><a class="anchor" name="4-preparar-medida-de-análise"
+        href="#4-preparar-medida-de-análise"><span class="octicon octicon-link"></span></a>4 Preparar medida de Análise
+    </h2>
+    <h3 id="41-medida-1"><a class="anchor" name="41-medida-1" href="#41-medida-1"><span
+          class="octicon octicon-link"></span></a>4.1 Medida 1</h3>
+    <pre><code>
+  NetSales = SUM([Vendas]) * 0.7
+  </code></pre>
+    <h3 id="42-medida-1"><a class="anchor" name="42-medida-1" href="#42-medida-1"><span
+          class="octicon octicon-link"></span></a>4.2 Medida 1</h3>
+    <p> <img src="./src/Task2_-images-4-1.jpg" alt="alt text"> </p>
+    <h3 id="43-medida-2"><a class="anchor" name="43-medida-2" href="#43-medida-2"><span
+          class="octicon octicon-link"></span></a>4.3 Medida 2</h3>
+    <pre><code>ValorUnitario = SUM([Vendas]) / SUM([Quantidade])
+  </code></pre>
+    <h3 id="44-medida-2"><a class="anchor" name="44-medida-2" href="#44-medida-2"><span
+          class="octicon octicon-link"></span></a>4.4 Medida 2</h3>
+    <p><img src="./src/Task2_-images-5-1.jpg" alt="alt text"> </p>
+    <h2 id="5-questões-de-análise"><a class="anchor" name="5-questões-de-análise" href="#5-questões-de-análise"><span
+          class="octicon octicon-link"></span></a>5 Questões de Análise</h2>
+    <h3 id="51-visualizações-a-desenvolver"><a class="anchor" name="51-visualizações-a-desenvolver"
+        href="#51-visualizações-a-desenvolver"><span class="octicon octicon-link"></span></a>5.1 Visualizações a
+      desenvolver</h3>
+    <h4 id="1"><a class="anchor" name="1" href="#1"><span class="octicon octicon-link"></span></a>1.</h4>
+    <p><img src="./src/Task2_-images-6-1.jpg" alt="alt text"><br><img src="./src/Task2_-images-7-1.jpg" alt="alt text"> </p>
+    <h4 id="2"><a class="anchor" name="2" href="#2"><span class="octicon octicon-link"></span></a>2.</h4>
+    <p> <img src="./src/Task2_-images-8-1.jpg" alt="alt text"> </p>
+    <pre><code>Media_Vendas = AVERAGE(Facts[Vendas])
+  </code></pre>
+    <h4 id="3"><a class="anchor" name="3" href="#3"><span class="octicon octicon-link"></span></a>3.</h4>
+    <p><img src="./src/Task2_-images-9-1.jpg" alt="alt text"></p>
+    <h4 id="4"><a class="anchor" name="4" href="#4"><span class="octicon octicon-link"></span></a>4.</h4>
+    <p> <img src="./src/Task2_-images-10-1.jpg" alt="alt text"></p>
+    <h2 id="52-proponha-visualizaçõesinterações"><a class="anchor" name="52-proponha-visualizaçõesinterações"
+        href="#52-proponha-visualizaçõesinterações"><span class="octicon octicon-link"></span></a>5.2 Proponha
+      Visualizações/Interações</h2>
+    <p> <img src="./src/Task2_-images-11-1.jpg" alt="alt text"><br> <img src="./src/Task2_-images-12-1.jpg" alt="alt text"></p>
+  </div>
+</body>
+
+</html>
